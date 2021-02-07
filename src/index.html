@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Stock Dashboard</title>
+		<meta charset="UTF-8">
+
+		<!-- Custom CSS -->
+		<link rel ="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+		<link type = "text/css" rel = "stylesheet" href = "stylesheet.css"/>
+
+		<!-- Font Awesome -->
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V" crossorigin="anonymous">
+
+		<!-- Import jQuery -->
+		<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"></script>
+		<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+		<!-- Custom Scripts -->
+		<script type="text/javascript" src="dashboard.js"></script>
+	</head>
+	<body>
+		<!-- Loading Screen -->
+		<div id = "loadScreen">
+			<div class = "loader"></div>
+		</div>
+
+		<!-- Dashboard -->
+		<section id = "delayShowContent">
+			<h2 style = "text-align: center; padding: 30px;" id = "topTitle">Stock Dashboard</h2>
+			<div class="container-fluid" id = "stocks">
+				<p id = "timeNotification"></p>
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">Ticker Symbol</th>
+							<th scope="col" id = "priceBasedOnTime">Current Price</th>
+							<th scope="col">Company Name (Ticker if unavailable)</th>
+							<th scope="col"></th>
+							<th></th> <!-- Empty th for deletion column -->
+						</tr>
+					</thead>
+					<tbody class = "append">
+						<tr class = "stockRow">
+							<th scope="row" onclick="clearText(this)" onpaste = "setTimeout(() => { trimText(this) }, 10);" onkeypress = "return (this.innerText.length < 4);" onmouseleave = "restoreTickerText(this)" contenteditable="true" class = "single-line" maxlength="4" style = "text-transform: uppercase;">Type Ticker Here</th>
+							<td>$0.00</td>
+							<td></td>
+							<td><a href = "#">Learn more <i class="fas fa-arrow-alt-circle-right" style = "margin-left: 2px;"></i></a></td>
+							<td>
+								<a href="#" onclick = "removeRow(this)">X</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<!-- Dashboard Buttons -->
+			<div class = "container-fluid">
+				<button class="btn btn-info bottom-space" id = "css-irow" onclick="appendRowNew();">Insert Row</button>
+				<button class="btn btn-info bottom-space" id = "refresh-table" onclick="populateTableDataOnce()">Refresh Dashboard</button>
+				<button class="btn btn-info bottom-space" onclick="saveCookie()">Save Dashboard</button> <!-- Should handle process of reading row and initializing the array to initialize the cookie-->
+				<button class="btn btn-info bottom-space" onclick="resetRows()">Reset</button>
+				<br /><br />
+			</div>
+
+			<div class = "container-fluid">
+
+				<!-- Dashboard Information -->
+				<p style = "margin-top: -10px;">Notes: Prices update every minute. Using data from Finnhub. This dashboard will attempt to observe all major stock market holidays and times during which both the NYSE and Nasdaq are closed.</p>
+				<p>Guide: Use "Insert Row" to add up to 8 stocks. After adding a new stock, use the "Refresh Dashboard" button to update changes. Use "Save Dashboard" to save the dashboard, including for future sessions. Use "Reset" to clear the dashboard. When refreshing the page without saving, the dashboard will retain the state it was last at when it was last saved.</p>
+
+				<hr />
+
+				<!-- User Information -->
+				<p>Disclaimer: Prices rounded to two decimals. Prices displayed after hours are from market close. This website also requires that JavaScript is enabled. Finally, this website uses cookies to save the data on your stock dashboard. By continuing to browse this website, you are agreeing to the use of cookies. Click <a href = "https://www.wikipedia.org/" onclick = "removeCookie()">here</a> to delete all cookies and leave this website.</p>
+				<p>Learning Points: Rest APIs, JSON, DOM manipulation, Netlify Functions (Lambda Functions), environment variables, JavaScript and jQuery</p>
+				<p>Made by <a href = "allandao.com">Allan.</a></p>
+			</div>
+		</section>
+	</body>
+</html>
